@@ -1,14 +1,11 @@
-# Imagem base oficial do n8n
 FROM n8nio/n8n:latest
 
-# Define o diretório de trabalho
-WORKDIR /data
+# Deixe a imagem usar o ENTRYPOINT/CMD padrão.
+# Só passamos configs que ajudam no Render:
 
-# Copia todos os arquivos do projeto para dentro do container
-COPY . .
+# Faz o n8n escutar na porta que o Render injeta
+ENV N8N_HOST=0.0.0.0
+ENV N8N_PORT=${PORT}
 
-# Expõe a porta padrão do n8n
-EXPOSE 5678
-
-# Comando para iniciar o n8n
-CMD ["n8n", "start"]
+# Silencia o warning de permissões (opcional)
+ENV N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=false
